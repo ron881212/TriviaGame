@@ -1,3 +1,14 @@
 .wrapper{
     text-align: center;
 }
+
+.answers{
+    text-align: center;
+    padding: 30px;
+    width: 500px;
+    font-size: 20px;
+}
+
+#answer1{
+    margin-top: 80px;
+}

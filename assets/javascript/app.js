@@ -1,26 +1,39 @@
 // Empty variables will hold score
-
 var guessedRight = 0;
 var guessedWrong = 0;
 var unAnswered = 0;
 
 // Start Button Function
+$(document).on("click", "#startButton", function () {
+    $("#startButton").hide();
+    $(".wrapper").html('<h1>Theme Goes Here</h1>' 
+         + '<h3 class="shotClock">Time Remaining: Coundown Here</h3>'
+         + '<h2 id="questionText">Question Goes Here</h2>'
+         + '<div class="questionImg"></div>'
+         + '<div id="answer1" class="answers mx-auto">Option 1</div><br>'
+         + '<div id="answer2" class="answers mx-auto">Option 2</div><br>'
+         + '<div id="answer3" class="answers mx-auto">Option 3</div><br>'
+         + '<div id="answer4" class="answers mx-auto">Option 4</div>');
 
-$(".shotClock").on("click", function () {
-    nextQuestion();
-});
-
-// change background color of answers
-
-$(".answers").mouseover(function () {
-    $(this).css("background-color", "red");
-    $(this).mouseout(function () {
-        $(this).css("background-color", "transparent")
+    // change background color of answers
+    $(".answers").mouseover(function () {
+        $(this).css("background-color", "#db3545");
+        $(this).mouseout(function () {
+            $(this).css("background-color", "transparent")
+        });
     });
+
+        // reset
+        i = -1;
+        guessedRight = 0;
+        guessedWrong = 0;
+        unAnswered = 0;
+        nextQuestion();
+        $(".answers").show();
+        $(".shotClock").show();
 });
 
 // Questions are Objects with answers and values
-
 var questions = [{
         question: "what time is it",
         answer1: "peanut butter jelly time",
@@ -74,24 +87,27 @@ function nextQuestion() {
     var questionCounter = 16;
 
     function questionsList() {
-        if(i === questions.length){
+        if(i === questions.length + 1){
             $("#questionText").text("You Got " + guessedRight + " Answers Right");
             var newDiv = $("<div>");
             newDiv.text(guessedWrong + " Wrong");
             var newDiv2 = $("<div>");
-            newDiv2.text("and " + unAnswered + " unanswered");
+            newDiv2.text("And " + unAnswered + " Unanswered");
             $("#questionText").append(newDiv);
             $("#questionText").append(newDiv2);
             $(".answers").hide();
             $(".shotClock").hide();
+            var resetButton = $("<button>");
+            resetButton.addClass("btn btn-danger reset").text("Don't You Dare")
+            $("#questionText").append(resetButton);
         }
+
         $("#questionText").text(questions[i].question);
         $("#answer1").text(questions[i].answer1);
         $("#answer2").text(questions[i].answer2);
         $("#answer3").text(questions[i].answer3);
         $("#answer4").text(questions[i].answer4);
         $(".answers").removeClass("correct wrong");
-        // debugger
     };
 
     function rightWrong() {
@@ -102,25 +118,27 @@ function nextQuestion() {
     }
 
     $(document).on("click", ".correct", function () {
-        clearInterval(questionTimer);
-        alert("correct");
+        questionCounter = 16;
+        console.log("correct");
+        $(".questionImg").attr('src', questions[i].img1);
         guessedRight++;
         i++;
         questionsList();
         rightWrong();
         timeLeftToAnswer();
-        // nextQuestion();
+        nextQuestion();
     });
 
     $(document).on("click", ".wrong", function () {
-        clearInterval(questionTimer);
-        alert("wrong");
+        questionCounter = 16;
+        console.log("wrong");
+        $(".questionImg").attr('src', questions[i].img2);
         guessedWrong++;
         i++;
         questionsList();
         rightWrong();
         timeLeftToAnswer();
-        // nextQuestion();
+        nextQuestion();
     });
 
     var questionTimer = setInterval(timeLeftToAnswer, 1000);
@@ -135,4 +153,14 @@ function nextQuestion() {
             nextQuestion();
         }
     }
+
+    $(document).on("click", ".reset", function () {
+        i = -1;
+        guessedRight = 0;
+        guessedWrong = 0;
+        unAnswered = 0;
+        nextQuestion();
+        $(".answers").show();
+        $(".shotClock").show();
+    });
 }

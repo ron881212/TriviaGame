@@ -1,7 +1,8 @@
 // Empty variables will hold score
 
-var guessedRight;
-var guessedWrong;
+var guessedRight = 0;
+var guessedWrong = 0;
+var unAnswered = 0;
 
 // Start Button Function
 
@@ -64,38 +65,62 @@ var questions = [{
     }
 ];
 
-var i = 0;
+var i = -1;
 
 function nextQuestion() {
-    
+    i++;
+    questionsList();
+    rightWrong();
     var questionCounter = 16;
 
-    $("#questionText").text(questions[i].question);
-    $("#answer1").text(questions[i].answer1);
-    questions[i].value1();
-    $("#answer2").text(questions[i].answer2);
-    questions[i].value2();
-    $("#answer3").text(questions[i].answer3);
-    questions[i].value3();
-    $("#answer4").text(questions[i].answer4);
-    questions[i].value4();
-    
+    function questionsList() {
+        if(i === questions.length){
+            $("#questionText").text("You Got " + guessedRight + " Answers Right");
+            var newDiv = $("<div>");
+            newDiv.text(guessedWrong + " Wrong");
+            var newDiv2 = $("<div>");
+            newDiv2.text("and " + unAnswered + " unanswered");
+            $("#questionText").append(newDiv);
+            $("#questionText").append(newDiv2);
+            $(".answers").hide();
+            $(".shotClock").hide();
+        }
+        $("#questionText").text(questions[i].question);
+        $("#answer1").text(questions[i].answer1);
+        $("#answer2").text(questions[i].answer2);
+        $("#answer3").text(questions[i].answer3);
+        $("#answer4").text(questions[i].answer4);
+        $(".answers").removeClass("correct wrong");
+        // debugger
+    };
 
-    $(".correct").on("click", function () {
+    function rightWrong() {
+        questions[i].value1();
+        questions[i].value2();
+        questions[i].value3();
+        questions[i].value4();
+    }
+
+    $(document).on("click", ".correct", function () {
         clearInterval(questionTimer);
         alert("correct");
         guessedRight++;
-        $(".answers").removeClass("correct wrong");
-        i++
-        nextQuestion();
+        i++;
+        questionsList();
+        rightWrong();
+        timeLeftToAnswer();
+        // nextQuestion();
     });
-    $(".wrong").on("click", function () {
+
+    $(document).on("click", ".wrong", function () {
         clearInterval(questionTimer);
         alert("wrong");
         guessedWrong++;
-        $(".answers").removeClass("correct wrong");
         i++;
-        nextQuestion();
+        questionsList();
+        rightWrong();
+        timeLeftToAnswer();
+        // nextQuestion();
     });
 
     var questionTimer = setInterval(timeLeftToAnswer, 1000);
@@ -105,12 +130,9 @@ function nextQuestion() {
         $(".shotClock").text("Time Remaining: " + questionCounter);
         if (questionCounter === 0) {
             clearInterval(questionTimer);
-            $(".answers").removeClass("correct wrong");
             $(".shotClock").text("Times Up");
-            i++;
+            unAnswered++;
             nextQuestion();
         }
     }
 }
-
-

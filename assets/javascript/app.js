@@ -30,7 +30,7 @@ $(document).on("click", "#startButton", function () {
         unAnswered = 0;
         nextQuestion();
         $(".answers").show();
-        $(".shotClock").show();
+        $(".shotClock").show();     
 });
 
 // Questions are Objects with answers and values
@@ -39,7 +39,7 @@ var questions = [{
         answer1: "peanut butter jelly time",
         value1: function () {
             $('#answer1').addClass('correct')
-        },
+        },      
         answer2: "Hammer Time",
         value2: function () {
             $('#answer2').addClass('wrong')
@@ -75,19 +75,43 @@ var questions = [{
         },
         img1: "...",
         img2: "..."
+    },
+    {
+        question: "how many strips in the flag",
+        answer1: "42",
+        value1: function () {
+            $('#answer1').addClass('wrong')
+        },
+        answer2: "13",
+        value2: function () {
+            $('#answer2').addClass('correct')
+        },
+        answer3: "50",
+        value3: function () {
+            $('#answer3').addClass('wrong')
+        },
+        answer4: "47",
+        value4: function () {
+            $('#answer4').addClass('wrong')
+        },
+        img1: "...",
+        img2: "..."
     }
 ];
 
 var i = -1;
-
+// nextQuestion();
 function nextQuestion() {
     i++;
     questionsList();
     rightWrong();
+    
+    
     var questionCounter = 16;
 
     function questionsList() {
-        if(i === questions.length + 1){
+        
+        if(i === questions.length){
             $("#questionText").text("You Got " + guessedRight + " Answers Right");
             var newDiv = $("<div>");
             newDiv.text(guessedWrong + " Wrong");
@@ -98,47 +122,54 @@ function nextQuestion() {
             $(".answers").hide();
             $(".shotClock").hide();
             var resetButton = $("<button>");
-            resetButton.addClass("btn btn-danger reset").text("Don't You Dare")
+            resetButton.addClass("btn btn-danger reset").text("Don't You Dare");
             $("#questionText").append(resetButton);
+            clearInterval(questionTimer);
+            $(".answers").removeClass("correct wrong");
         }
-
-        $("#questionText").text(questions[i].question);
-        $("#answer1").text(questions[i].answer1);
-        $("#answer2").text(questions[i].answer2);
-        $("#answer3").text(questions[i].answer3);
-        $("#answer4").text(questions[i].answer4);
-        $(".answers").removeClass("correct wrong");
+        if(i < questions.length){
+            $("#questionText").text(questions[i].question);
+            $("#answer1").text(questions[i].answer1);
+            $("#answer2").text(questions[i].answer2);
+            $("#answer3").text(questions[i].answer3);
+            $("#answer4").text(questions[i].answer4);
+            $(".answers").removeClass("correct wrong");
+        }
     };
+        
+   
 
     function rightWrong() {
-        questions[i].value1();
-        questions[i].value2();
-        questions[i].value3();
-        questions[i].value4();
+        if(i < questions.length){
+            questions[i].value1();
+            questions[i].value2();
+            questions[i].value3();
+            questions[i].value4();
+        }
     }
 
     $(document).on("click", ".correct", function () {
         questionCounter = 16;
         console.log("correct");
-        $(".questionImg").attr('src', questions[i].img1);
+        // $(".questionImg").attr('src', questions[i].img1);
         guessedRight++;
         i++;
         questionsList();
         rightWrong();
         timeLeftToAnswer();
-        nextQuestion();
+        // nextQuestion();
     });
 
     $(document).on("click", ".wrong", function () {
         questionCounter = 16;
         console.log("wrong");
-        $(".questionImg").attr('src', questions[i].img2);
+        // $(".questionImg").attr('src', questions[i].img2);
         guessedWrong++;
         i++;
         questionsList();
         rightWrong();
         timeLeftToAnswer();
-        nextQuestion();
+        // nextQuestion();
     });
 
     var questionTimer = setInterval(timeLeftToAnswer, 1000);
@@ -155,12 +186,28 @@ function nextQuestion() {
     }
 
     $(document).on("click", ".reset", function () {
-        i = -1;
+        i = 0;
+        questionCounter = 16;
         guessedRight = 0;
         guessedWrong = 0;
         unAnswered = 0;
-        nextQuestion();
         $(".answers").show();
         $(".shotClock").show();
+        $(".answers").removeClass("correct wrong");
+        questionsList();
+        rightWrong();
+        clearInterval(questionTimer);
+        questionTimer = setInterval(timeLeftToAnswer, 1000);
+        function timeLeftToAnswer() {
+            questionCounter--;
+            $(".shotClock").text("Time Remaining: " + questionCounter);
+            if (questionCounter === 0) {
+                clearInterval(questionTimer);
+                $(".shotClock").text("Times Up");
+                unAnswered++;
+                
+            }
+        }
     });
-}
+};
+

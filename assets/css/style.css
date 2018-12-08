@@ -13,6 +13,16 @@
     margin-top: 80px;
 }
 
-/* body {
+body {
     background-image: url("../images/AHS-Apocalypse.jpg");
- } */
+ }
+
+ *{
+     color: white;
+ }
+ #theme{
+     color: black;
+ }
+ .theme{
+     color: black;
+ }

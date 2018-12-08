@@ -56,8 +56,8 @@ var questions = [{
         value4: function () {
             $('#answer4').addClass('wrong')
         },
-        img1: "../images/crop1.jpg",
-        img2: "../images/wrong.gif"
+        img1: "./assets/images/crop1.jpg",
+        img2: "./assets/images/wrong.gif"
     },
     {
         question: "What is the name of the outpost led by Ms. Wilhemina Venable",

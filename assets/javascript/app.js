@@ -77,8 +77,8 @@ var questions = [{
         value4: function () {
             $('#answer4').addClass('wrong')
         },
-        img1: "/assets/images/outpost1.png",
-        img2: "/assets/images/wrong2.gif"
+        img1: "./assets/images/outpost1.png",
+        img2: "./assets/images/wrong2.gif"
     },
     {
         question: "Who is the voodoo queen",
@@ -98,8 +98,8 @@ var questions = [{
         value4: function () {
             $('#answer4').addClass('wrong')
         },
-        img1: "/assets/images/VD1.jpg",
-        img2: "/assets/images/wrong3.gif"
+        img1: "./assets/images/VD1.jpg",
+        img2: "./assets/images/wrong3.gif"
     },
     {
         question: "What actress play Moira O'Hara",
@@ -119,8 +119,8 @@ var questions = [{
         value4: function () {
             $('#answer4').addClass('wrong')
         },
-        img1: "/assets/images/VD1.jpg",
-        img2: "/assets/images/wrong4.gif"
+        img1: "./assets/images/VD1.jpg",
+        img2: "./assets/images/wrong4.gif"
     },
     {
         question: "Where did Michael Langdon get his powers from",
@@ -140,8 +140,8 @@ var questions = [{
         value4: function () {
             $('#answer4').addClass('correct')
         },
-        img1: "/assets/images/VD1.jpg",
-        img2: "/assets/images/wrong5.gif"
+        img1: "./assets/images/VD1.jpg",
+        img2: "./assets/images/wrong5.gif"
     }
 ];
 

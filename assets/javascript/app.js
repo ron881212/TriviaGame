@@ -142,6 +142,27 @@ var questions = [{
         },
         img1: "./assets/images/VD2.jpg",
         img2: "./assets/images/wrong5.gif"
+    },
+    {
+        question: "What did Michael Langdon eat to awaking his powers",
+        answer1: "A ",
+        value1: function () {
+            $('#answer1').addClass('wrong')
+        },
+        answer2: "A brain",
+        value2: function () {
+            $('#answer2').addClass('wrong')
+        },
+        answer3: "A heart",
+        value3: function () {
+            $('#answer3').addClass('correct')
+        },
+        answer4: "Frog",
+        value4: function () {
+            $('#answer4').addClass('wrong')
+        },
+        img1: "./assets/images/wrong6.gif",
+        img2: "./assets/images/wrong6.gif"
     }
 ];
 

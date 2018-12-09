@@ -39,7 +39,7 @@ $(document).on("click", "#startButton", function () {
 
 // Questions are Objects with answers and values
 var questions = [{
-        question: "what is the name of the dark group that scretly controls the world",
+        question: "What is the name of the dark group that scretly controls the world?",
         answer1: "The Hand",
         value1: function () {
             $('#answer1').addClass('wrong')
@@ -60,7 +60,7 @@ var questions = [{
         img2: "./assets/images/wrong.gif"
     },
     {
-        question: "What is the name of the outpost led by Ms. Wilhemina Venable",
+        question: "What is the name of the outpost led by Ms. Wilhemina Venable?",
         answer1: "Outpost 1",
         value1: function () {
             $('#answer1').addClass('wrong')
@@ -81,7 +81,7 @@ var questions = [{
         img2: "./assets/images/wrong2.gif"
     },
     {
-        question: "Who is the voodoo queen",
+        question: "Who is the voodoo queen?",
         answer1: "Cordelia",
         value1: function () {
             $('#answer1').addClass('wrong')
@@ -98,11 +98,11 @@ var questions = [{
         value4: function () {
             $('#answer4').addClass('wrong')
         },
-        img1: "./assets/images/VD1.jpg",
+        img1: "./assets/images/ahs-outpost2.png",
         img2: "./assets/images/wrong3.gif"
     },
     {
-        question: "What actress play Moira O'Hara",
+        question: "What actress play Moira O'Hara?",
         answer1: "Frances Conroy",
         value1: function () {
             $('#answer1').addClass('correct')
@@ -140,7 +140,7 @@ var questions = [{
         value4: function () {
             $('#answer4').addClass('correct')
         },
-        img1: "./assets/images/VD1.jpg",
+        img1: "./assets/images/VD2.jpg",
         img2: "./assets/images/wrong5.gif"
     }
 ];
@@ -176,17 +176,17 @@ function nextQuestion() {
         }
         if (i < questions.length) {
             $(".correct").css("background-color", "transparent");
-            $("#questionImg").attr('src', "");
             $("#questionText").text(questions[i].question);
             $("#answer1").text(questions[i].answer1);
             $("#answer2").text(questions[i].answer2);
             $("#answer3").text(questions[i].answer3);
             $("#answer4").text(questions[i].answer4);
             $(".answers").removeClass("correct wrong");
-        }
+            clearInterval(rightWrong);
+            clearInterval(questionsList);
+            $("#questionImg").attr('src', "");
+        } 
     };
-
-
 
     function rightWrong() {
         if (i < questions.length) {
@@ -194,19 +194,11 @@ function nextQuestion() {
             questions[i].value2();
             questions[i].value3();
             questions[i].value4();
-            // questionCounter = 16;
             $(".wrong").show();
             $(".shotClock").show();
             $(".answers").show();
-            clearInterval(questionsList);
-            clearInterval(rightWrong);
         }
     }
-
-    // function timing(){
-    //     //  questionCounter = 16;
-    //     $(".shotClock").show();      
-    // }
 
     $(document).on("click", ".correct", function () {
         questionCounter = 18;
@@ -217,10 +209,9 @@ function nextQuestion() {
         $(".shotClock").hide();
         $(".answers").hide();
         setInterval(questionsList, 4000);
-        setInterval(rightWrong, 4000);
+        rightWrong();
+        clearImg();
         $("#questionText").text("Correct");
-        // setInterval(timing, 3000);
-        // rightWrong();
     });
 
     $(document).on("click", ".wrong", function () {
@@ -235,8 +226,6 @@ function nextQuestion() {
         setInterval(questionsList, 4000);
         setInterval(rightWrong, 4000);
         $("#questionText").text("Wrong, the dark lord would be disappointed");
-        // setInterval(timing, 3000);
-        // rightWrong();
     });
     
     var questionTimer = setInterval(timeLeftToAnswer, 1000);
@@ -257,7 +246,7 @@ function nextQuestion() {
 
     $(document).on("click", ".reset", function () {
         i = 0;
-        questionCounter = 16;
+        questionCounter = 18;
         guessedRight = 0;
         guessedWrong = 0;
         unAnswered = 0;
@@ -267,7 +256,17 @@ function nextQuestion() {
         $(".answers").removeClass("correct wrong");
         questionsList();
         rightWrong();
-        clearInterval(questionTimer);
+        $(".answers").mouseover(function () {
+            $(this).css("background-color", "#343a40");
+            $(this).css("color", "white");
+            $(this).mouseout(function () {
+                $(this).css("background-color", "transparent");
+                $(this).css("color", "white");
+            });
+        });
+        // clearInterval(questionTimer);
+        // clearInterval(questionsList);
+        // clearInterval(rightWrong);
         questionTimer = setInterval(timeLeftToAnswer, 1000);
 
         function timeLeftToAnswer() {

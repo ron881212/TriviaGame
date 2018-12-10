@@ -142,6 +142,27 @@ var questions = [{
         },
         img1: "./assets/images/VD1.jpg",
         img2: "./assets/images/wrong5.gif"
+    },
+    {
+        question: "What did Michael Langdon eat to awaking his powers",
+        answer1: "A rat",
+        value1: function () {
+            $('#answer1').addClass('wrong')
+        },
+        answer2: "A brain",
+        value2: function () {
+            $('#answer2').addClass('wrong')
+        },
+        answer3: "A heart",
+        value3: function () {
+            $('#answer3').addClass('correct')
+        },
+        answer4: "Frog",
+        value4: function () {
+            $('#answer4').addClass('wrong')
+        },
+        img1: "./assets/images/wrong6.gif",
+        img2: "./assets/images/wrong6.gif"
     }
 ];
 
@@ -198,8 +219,6 @@ function nextQuestion() {
             $(".wrong").show();
             $(".shotClock").show();
             $(".answers").show();
-            clearInterval(questionsList);
-            clearInterval(rightWrong);
         }
     }
 
@@ -216,11 +235,9 @@ function nextQuestion() {
         i++;
         $(".shotClock").hide();
         $(".answers").hide();
-        setInterval(questionsList, 4000);
-        setInterval(rightWrong, 4000);
+        setTimeout(questionsList, 4000);
+        setTimeout(rightWrong, 4000);
         $("#questionText").text("Correct");
-        // setInterval(timing, 3000);
-        // rightWrong();
     });
 
     $(document).on("click", ".wrong", function () {
@@ -232,11 +249,9 @@ function nextQuestion() {
         $(".shotClock").hide();
         $(".wrong").hide();
         $(".correct").css("background-color", "#343a40");
-        setInterval(questionsList, 4000);
-        setInterval(rightWrong, 4000);
+        setTimeout(questionsList, 4000);
+        setTimeout(rightWrong, 4000);
         $("#questionText").text("Wrong, the dark lord would be disappointed");
-        // setInterval(timing, 3000);
-        // rightWrong();
     });
     
     var questionTimer = setInterval(timeLeftToAnswer, 1000);
